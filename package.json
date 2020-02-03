@@ -1,0 +1,32 @@
+{
+  "name": "wiegand-encoder",
+  "version": "1.0.0",
+  "description": "Encode and decode 26-bit Wiegand protocol credentials",
+  "keywords": [
+    "wiegand",
+    "protocol",
+    "parity",
+    "access control"
+  ],
+  "homepage": "https://github.com/jessety/wiegand-encoder#readme",
+  "bugs": {
+    "url": "https://github.com/jessety/wiegand-encoder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessety/wiegand-encoder.git"
+  },
+  "license": "MIT",
+  "author": "Jesse Youngblood <jessetyoungblood@gmail.com> (https://jesseyoungblood.com)",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@jessety/eslint-config": "^1.0.4",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0"
+  }
+}
