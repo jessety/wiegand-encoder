@@ -9,12 +9,17 @@
 /**
  * Calculate left and right parity for a given credential
  * @param {string} contents - Wiegand credential
+ * @throws
  * @returns {{left: number, right: number}}
  */
-function calculate(contents = '') {
+function calculate(contents) {
 
-  if (typeof contents !== 'string' || contents.length < 24) {
-    throw new Error(`Invalid 24-bit wiegand credential. Received: "${contents}"`);
+  if (typeof contents !== 'string' || contents.length < 2) {
+    throw new Error(`Invalid message. Received: "${contents}"`);
+  }
+
+  if (contents.length % 2 === 1) {
+    throw new Error(`Cannot calculate parity for message with an odd number of bits.`);
   }
 
   // Split the string in half
@@ -47,13 +52,14 @@ function calculate(contents = '') {
 }
 
 /**
- * Confirm the parity bits. Either throws an exception, or does nothing.
+ * Confirm left and right parity bits. Throws an exception if they are not valid.
  * @param {string} message - a Wiegand credential message
+ * @throws
  */
-function validate(message = '') {
+function validate(message) {
 
   if (typeof message !== 'string' || message.length < 26) {
-    throw new Error(`Invalid 26-bit wiegand string. Received: "${message}"`);
+    throw new Error(`Invalid wiegand message. Received: "${message}"`);
   }
 
   // Pull out the declared right and left parity bits
@@ -86,13 +92,10 @@ function validate(message = '') {
 /**
  * Wrap a Wiegand credential in parity bits
  * @param {string} credential - Wiegand credential
+ * @throws
  * @returns {string} - The credential wrapped in parity bits
  */
-function wrap(contents = '') {
-
-  if (typeof contents !== 'string' || contents.length < 24) {
-    throw new Error(`Invalid 24-bit Wiegand string. Received: "${contents}"`);
-  }
+function wrap(contents) {
 
   const { left, right } = calculate(contents);
 
