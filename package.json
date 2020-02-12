@@ -1,6 +1,6 @@
 {
   "name": "wiegand-encoder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Encode and decode 26, 34, or 38 bit Wiegand protocol credentials",
   "keywords": [
     "wiegand",
