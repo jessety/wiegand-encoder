@@ -50,7 +50,7 @@ describe('decode function', () => {
 
   test('correctly decodes "01111111111111111111111111111111111111"', () => {
 
-    const { cardNumber, facilityCode } = wiegand.decode('01111111111111111111111111111111111111', 24, 12);
+    const { cardNumber, facilityCode } = wiegand.decode('01111111111111111111111111111111111111');
 
     expect(facilityCode).toBe(4095);
     expect(cardNumber).toBe(16777215);
@@ -58,7 +58,7 @@ describe('decode function', () => {
 
   test('correctly decodes "00000000000000000000000000000000000001"', () => {
 
-    const { cardNumber, facilityCode } = wiegand.decode('00000000000000000000000000000000000001', 24, 12);
+    const { cardNumber, facilityCode } = wiegand.decode('00000000000000000000000000000000000001');
 
     expect(facilityCode).toBe(0);
     expect(cardNumber).toBe(0);
@@ -66,7 +66,7 @@ describe('decode function', () => {
 
   test('correctly decodes "00000010110100000000000000001010001000"', () => {
 
-    const { cardNumber, facilityCode } = wiegand.decode('00000010110100000000000000001010001000', 24, 12);
+    const { cardNumber, facilityCode } = wiegand.decode('00000010110100000000000000001010001000');
 
     expect(facilityCode).toBe(90);
     expect(cardNumber).toBe(324);
@@ -74,7 +74,7 @@ describe('decode function', () => {
 
   test('correctly decodes "10000010110110000000000000100110010111"', () => {
 
-    const { cardNumber, facilityCode } = wiegand.decode('10000010110110000000000000100110010111', 24, 12);
+    const { cardNumber, facilityCode } = wiegand.decode('10000010110110000000000000100110010111');
 
     expect(facilityCode).toBe(91);
     expect(cardNumber).toBe(1227);
@@ -82,10 +82,36 @@ describe('decode function', () => {
 
   test('correctly decodes "10000000011100000000000000010110001111"', () => {
 
-    const { cardNumber, facilityCode } = wiegand.decode('10000000011100000000000000010110001111', 24, 12);
+    const { cardNumber, facilityCode } = wiegand.decode('10000000011100000000000000010110001111');
 
     expect(facilityCode).toBe(14);
     expect(cardNumber).toBe(711);
+  });
+
+  // Card number and facility code length
+
+  test('infers component length for a 26-bit message ', () => {
+
+    const inferred = wiegand.decode('01111111111111111111111111');
+    const declared = wiegand.decode('01111111111111111111111111', 16, 8);
+
+    expect(inferred).toStrictEqual(declared);
+  });
+
+  test('infers component length for a 34-bit message ', () => {
+
+    const inferred = wiegand.decode('0111111111111111111111111111111111');
+    const declared = wiegand.decode('0111111111111111111111111111111111', 22, 10);
+
+    expect(inferred).toStrictEqual(declared);
+  });
+
+  test('infers component length for a 38-bit message ', () => {
+
+    const inferred = wiegand.decode('01111111111111111111111111111111111111');
+    const declared = wiegand.decode('01111111111111111111111111111111111111', 24, 12);
+
+    expect(inferred).toStrictEqual(declared);
   });
 
   // Parity checks
@@ -118,7 +144,7 @@ describe('decode function', () => {
   });
 
   test('throws an error when sent an invalid card number length', () => {
-    expect(() => wiegand.decode('01111111111111111111111111', 'string')).toThrow();
+    expect(() => wiegand.decode('01111111111111111111111111', 'string', 8)).toThrow();
   });
 
   test('throws an error when sent an invalid facility code length', () => {

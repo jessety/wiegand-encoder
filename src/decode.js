@@ -11,16 +11,26 @@ const parity = require('./parity.js');
 /**
  * Decode a Wiegand protocol message into a card number and facility code, after validating parity bits
  * @param {string} wiegand - Wiegand message
- * @param {number=16} [cardNumberLength] - How many bits the card number should be
- * @param {number=8} [facilityCodeLength] - How many bits the facility code should be
+ * @param {number} [cardNumberLength] - How many bits the card number should be
+ * @param {number} [facilityCodeLength] - How many bits the facility code should be
  * @param {boolean=true} [validateParity] - Whether to validate parity bits on the message or not
  * @throws
  * @returns {{cardNumber: string, facilityCode: string}}
  */
-function decode(string = null, cardNumberLength = 16, facilityCodeLength = 8, validateParity = true) {
+function decode(string = null, cardNumberLength = null, facilityCodeLength = null, validateParity = true) {
 
   if (typeof string !== 'string') {
     throw new Error(`Invalid Wiegand credential. Received: "${string}"`);
+  }
+
+  if (cardNumberLength === null || facilityCodeLength === null) {
+
+    // Use the message length to infer the facility code length and the card length
+    // If the input length is 26, this will resolve to 8 & 16
+    // This enables automatically decoding 26, 34, or 38 bit credentials without specifying element length
+
+    facilityCodeLength = Math.floor((string.length - 2) / 3);
+    cardNumberLength = (string.length - 2) - facilityCodeLength;
   }
 
   if (Number.isInteger(cardNumberLength) === false || cardNumberLength < 0) {
