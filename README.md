@@ -1,6 +1,6 @@
 # wiegand-encoder
 
-Lightweight module for encoding and decoding 26-bit Wiegand protocol credentials
+Lightweight module that encodes and decodes 26, 34, or 38 bit Wiegand protocol credentials for communication with access control systems.
 
 [![test](https://github.com/jessety/wiegand-encoder/workflows/test/badge.svg)](https://github.com/jessety/wiegand-encoder/actions?query=workflow%3Atest)
 [![test](https://github.com/jessety/wiegand-encoder/workflows/lint/badge.svg)](https://github.com/jessety/wiegand-encoder/actions?query=workflow%3Alint)
@@ -23,7 +23,9 @@ import wiegand from 'wiegand-encoder';
 const wiegand = require('wiegand-encoder');
 ```
 
-Encode a card number and facility code, then compute and append the left and right parity bits:
+### Encoding
+
+The `encode()` function converts a card number and facility code into binary, counts the bit parity of each half of the message, and wraps it in parity bits.
 
 ```javascript
 const encoded = wiegand.encode(cardNumber, facilityCode);
@@ -32,14 +34,20 @@ wiegand.encode(wiegand.encode(324, 90));
 // 00101101000000001010001000
 ```
 
-Validate the parity bits, then decode the card number and facility code from a given credential message:
+If the specified card number or facility code are too high for the standard bit length, it will throw an exception. The largest possible card number in 26-bit protocol is `65535`, and the largest possible facility code is `255`.
+
+### Decoding
+
+The `decode()` function validates the parity bits on either side of the message, then parses the message content from binary back into integers.
 
 ```javascript
 const { cardNumber, facilityCode } = wiegand.decode('00101101000000001010001000');
 // { cardNumber: 324, facilityCode: 90 }
 ```
 
-Validate the parity bits of a message:
+If the parity bits are invalid, `decode()` will throw an exception.
+
+To check parity on a message without decoding it, use `parity.validate()`.
 
 ```javascript
 try {
@@ -47,6 +55,28 @@ try {
 } catch (error) {
   console.error(error);
 }
+```
+
+### Alternate bit length
+
+By default, `encode()` encodes all messages as 26-bit.
+
+To encode a larger message (e.g. 34-bit, 38-bit, etc.) send the bit length for the card number and facility code to the `encode()` function.
+
+26-bit credentials use a card number length of `16` and a facility code length of `8`. To encode a 34-bit message, use a card number length of `22` and a facility code length fo `10`.
+
+```javascript
+wiegand.encode(cardNumber, facilityCode, cardNumberLength, facilityCodeLength);
+
+wiegand.encode(wiegand.encode(324, 90, 22, 10));
+// 0000101101000000000000001010001000
+```
+
+The `decode()` function also supports optional `cardNumberLength` and `facilityCodeLength` parameters, but will attempt to infer them based on the content of the length of the message if omitted.
+
+```javascript
+const { cardNumber, facilityCode } = wiegand.decode('0000101101000000000000001010001000');
+// { cardNumber: 324, facilityCode: 90 }
 ```
 
 ## License
