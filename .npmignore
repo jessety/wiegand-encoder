@@ -8,3 +8,5 @@ examples
 .editorconfig
 tsconfig.json
 jest.config.json
+RELEASE.md.hbs
+RELEASE.md
