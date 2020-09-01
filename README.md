@@ -2,10 +2,9 @@
 
 Lightweight module that encodes and decodes 26, 34, or 38 bit Wiegand protocol credentials for communication with access control systems.
 
-[![test](https://github.com/jessety/wiegand-encoder/workflows/test/badge.svg)](https://github.com/jessety/wiegand-encoder/actions?query=workflow%3Atest)
-[![test](https://github.com/jessety/wiegand-encoder/workflows/lint/badge.svg)](https://github.com/jessety/wiegand-encoder/actions?query=workflow%3Alint)
-[![license](https://img.shields.io/github/license/jessety/wiegand-encoder.svg)](https://github.com/jessety/wiegand-encoder/blob/master/LICENSE)
+[![ci](https://github.com/jessety/wiegand-encoder/workflows/ci/badge.svg)](https://github.com/jessety/wiegand-encoder/actions?query=workflow%3Aci)
 [![npm](https://img.shields.io/npm/v/wiegand-encoder.svg)](https://www.npmjs.com/package/wiegand-encoder)
+[![license](https://img.shields.io/github/license/jessety/wiegand-encoder.svg)](https://github.com/jessety/wiegand-encoder/blob/main/LICENSE)
 
 ## Installation
 

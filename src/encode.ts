@@ -1,12 +1,10 @@
 //
-//  src/encode.js
+//  src/encode.ts
 //  Created by Jesse Youngblood on 02/02/20
 //  Copyright (c) 2020 Jesse Youngblood. All rights reserved.
 //
 
-'use strict';
-
-const parity = require('./parity.js');
+import parity from './parity';
 
 /**
  * Encode a given card number and facility code into a wiegand credential message
@@ -17,7 +15,7 @@ const parity = require('./parity.js');
  * @throws
  * @returns {string} Wiegand credential message
  */
-function encode(cardNumber = null, facilityCode = null, cardNumberLength = 16, facilityCodeLength = 8) {
+export default function encode(cardNumber: number, facilityCode: number, cardNumberLength = 16, facilityCodeLength = 8): string {
 
   if (Number.isInteger(cardNumber) === false || cardNumber < 0) {
     throw new Error(`Card number must be a positive integer. Received "${cardNumber}"`);
@@ -69,5 +67,3 @@ function encode(cardNumber = null, facilityCode = null, cardNumberLength = 16, f
 
   return message;
 }
-
-module.exports = encode;

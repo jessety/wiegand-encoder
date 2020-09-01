@@ -1,12 +1,10 @@
 //
-//  src/decode.js
+//  src/decode.ts
 //  Created by Jesse Youngblood on 02/02/20
 //  Copyright (c) 2020 Jesse Youngblood. All rights reserved.
 //
 
-'use strict';
-
-const parity = require('./parity.js');
+import parity from './parity';
 
 /**
  * Decode a Wiegand protocol message into a card number and facility code, after validating parity bits
@@ -17,13 +15,13 @@ const parity = require('./parity.js');
  * @throws
  * @returns {{cardNumber: string, facilityCode: string}}
  */
-function decode(string = null, cardNumberLength = null, facilityCodeLength = null, validateParity = true) {
+export default function decode(string: string, cardNumberLength?: number | undefined, facilityCodeLength?: number | undefined, validateParity = true): { cardNumber: number, facilityCode: number } {
 
   if (typeof string !== 'string') {
     throw new Error(`Invalid Wiegand credential. Received: "${string}"`);
   }
 
-  if (cardNumberLength === null || facilityCodeLength === null) {
+  if (cardNumberLength === undefined || facilityCodeLength === undefined) {
 
     // Use the message length to infer the facility code length and the card length
     // If the input length is 26, this will resolve to 8 & 16
@@ -71,5 +69,3 @@ function decode(string = null, cardNumberLength = null, facilityCodeLength = nul
 
   return { cardNumber, facilityCode };
 }
-
-module.exports = decode;

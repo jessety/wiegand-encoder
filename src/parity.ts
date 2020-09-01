@@ -1,10 +1,8 @@
 //
-//  src/parity.js
+//  src/parity.ts
 //  Created by Jesse Youngblood on 02/02/20
 //  Copyright (c) 2020 Jesse Youngblood. All rights reserved.
 //
-
-'use strict';
 
 /**
  * Calculate left and right parity for a given credential
@@ -12,7 +10,7 @@
  * @throws
  * @returns {{left: number, right: number}}
  */
-function calculate(contents) {
+function calculate(contents: string): { left: number, right: number} {
 
   if (typeof contents !== 'string' || contents.length < 2) {
     throw new Error(`Invalid message. Received: "${contents}"`);
@@ -55,8 +53,9 @@ function calculate(contents) {
  * Confirm left and right parity bits. Throws an exception if they are not valid.
  * @param {string} message - a Wiegand credential message
  * @throws
+ * @returns {boolean}
  */
-function validate(message) {
+function validate(message: string): boolean {
 
   if (typeof message !== 'string' || message.length < 26) {
     throw new Error(`Invalid wiegand message. Received: "${message}"`);
@@ -95,11 +94,11 @@ function validate(message) {
  * @throws
  * @returns {string} - The credential wrapped in parity bits
  */
-function wrap(contents) {
+function wrap(contents: string): string {
 
   const { left, right } = calculate(contents);
 
   return [left, contents, right].join('');
 }
 
-module.exports = { calculate, validate, wrap };
+export default { calculate, validate, wrap };

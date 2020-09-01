@@ -1,5 +1,10 @@
+src
 tests
 coverage
 examples
-.eslintrc.json
 .github
+.eslintrc.json
+.eslintignore
+.editorconfig
+tsconfig.json
+jest.config.json

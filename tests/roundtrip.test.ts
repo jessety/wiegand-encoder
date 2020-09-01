@@ -1,13 +1,11 @@
-'use strict';
-
-const wiegand = require('../');
+import wiegand from '../';
 
 describe('encode / decode roundtrip', () => {
 
   // Encode a card number & facility code, then compare the result to an exemplar
   // Finally, decode the encoded result and compare against the original card number and facility code
 
-  const run = (cardNumber, facilityCode, encodedExemplar, cardNumberLength = 16, facilityCodeLength = 8) => {
+  const run = (cardNumber: number, facilityCode: number, encodedExemplar: string, cardNumberLength = 16, facilityCodeLength = 8) => {
 
     const name = `matches for card number "${cardNumber}" and facility code "${facilityCode}" with ${cardNumberLength}-bit card number and ${facilityCodeLength}-bit facility code.`;
 

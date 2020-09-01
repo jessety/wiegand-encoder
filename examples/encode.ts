@@ -1,5 +1,5 @@
 // import wiegand from 'wiegand-encoder';
-import wiegand from '../lib/index.js';
+import wiegand from '../';
 
 const facilityCode = 71;
 const cardNumbers = [1238, 39, 5000, 4614, 47, 881, 10, 7];
