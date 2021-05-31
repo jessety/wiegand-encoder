@@ -1,4 +1,4 @@
-import wiegand from '../';
+import wiegand from '../src';
 
 describe('parity.calculate function', () => {
 

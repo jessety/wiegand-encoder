@@ -1,6 +1,6 @@
 'use strict';
 
-const wiegand = require('../');
+const wiegand = require('../src');
 
 // Test error situations not possible in TypeScript
 
